@@ -1,8 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_mysqldb import MySQL
 
-
-
 app = Flask(__name__)
 app.secret_key = 'many random bytes'
 
@@ -13,8 +11,6 @@ app.config['MYSQL_DB'] = 'artgallery'
 
 mysql = MySQL(app)
 
-
-
 @app.route('/')
 def Index():
     cur = mysql.connection.cursor()
@@ -22,8 +18,6 @@ def Index():
     data = cur.fetchall()
     cur.close()
     return render_template('index2.html', artists=data )
-
-
 
 @app.route('/insert', methods = ['POST'])
 def insert():
@@ -74,13 +68,6 @@ def update():
         mysql.connection.commit()
         cur.close()
         return redirect(url_for('Index'))
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":
