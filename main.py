@@ -13,12 +13,7 @@ mysql = MySQL(app)
 
 @app.route('/')
 def Index():
-    # cur = mysql.connection.cursor()
-    # cur.execute("SELECT  artist.aID,artist.name,artist.birthDate,artist.commission,artist.city,artist.street FROM artist")
-    # data = cur.fetchall()
-    # cur.close()
     return render_template('index2.html' )
-    # return render_template('header.html')
 @app.route('/get', methods=['POST'])
 def get():
     if request.method == 'POST':
