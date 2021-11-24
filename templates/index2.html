@@ -12,6 +12,34 @@
 
             <h2>Artist list <button type="button" class="btn btn-success  pull-right" data-toggle="modal" data-target="#myModal">Add Artist</button></h2>
 
+            <form action="{{ url_for('get') }}" method="POST">
+
+               <div class="form-group">
+                  <label>Name:</label>
+                  <input type="text" class="form-control" name="name">
+               </div>
+                <div class="form-group">
+                  <label>City:</label>
+                  <input type="text" class="form-control" name="city">
+               </div>
+                              <div class="form-group">
+
+                  <label>Commission:</label>
+                  <input type="number" class="form-control" name="commission">
+
+
+               </div>
+
+               <div class="form-group">
+
+                  <button class="btn btn-primary" type="submit">Get Artists</button>
+
+
+               </div>
+
+
+            </form>
+
     {%with messages = get_flashed_messages()%}
 
     {%if messages%}
@@ -36,6 +64,8 @@
               <th>Commission</th>
               <th>City</th>
               <th>Street</th>
+              <th>State</th>
+              <th>Zipcode</th>
               <th>Action</th>
           </tr>
                 {% for row in artists %}
@@ -43,9 +73,11 @@
                     <td>{{row.0}}</td>
                     <td>{{row.1}}</td>
                     <td>{{row.2}}</td>
-                    <td>{{row.3}}</td>
                     <td>{{row.4}}</td>
+                    <td>{{row.6}}</td>
                     <td>{{row.5}}</td>
+                    <td>{{row.7}}</td>
+                    <td>{{row.8}}</td>
                     <td>
                <a href="/update/{{row.0}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.0}}">Edit</a>
                <a href="/delete/{{ row.0 }}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure For Delete?')">Delete</a>
@@ -64,9 +96,9 @@
                <div class="form-group">
                   <label>Name:</label>
                    <input type="hidden"  name="aID" value="{{row.0}}">
+                   <input type="hidden"  name="birthDate" value="{{row.2}}">
                   <input type="text" class="form-control" name="name" value="{{row.1}}">
                </div>
-
                               <div class="form-group">
                   <label>deathDate:</label>
                   <input type="text" class="form-control" name="deathDate" value="{{row.3}}">
@@ -185,8 +217,8 @@
                 <div class="form-group">
 
 
-                  <label>Dbirth:</label>
-                  <input type="text" class="form-control" name="birthDate" required="1">
+                  <label>Birth date:</label>
+                  <input type="text" class="form-control" name="birthDate" required="1" placeholder="1991-01-12">
                </div>
                               <div class="form-group">
 
@@ -219,6 +251,14 @@
 
                   <label>State:</label>
                   <input type="text" class="form-control" name="stateAb" placeholder="TX">
+
+
+               </div>
+                                             <div class="form-group">
+
+
+                  <label>Zipcode:</label>
+                  <input type="text" class="form-control" name="zipcode" placeholder="7610-8990">
 
 
                </div>
