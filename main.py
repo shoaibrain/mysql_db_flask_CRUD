@@ -13,11 +13,31 @@ mysql = MySQL(app)
 
 @app.route('/')
 def Index():
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT  artist.aID,artist.name,artist.birthDate,artist.commission,artist.city,artist.street FROM artist")
-    data = cur.fetchall()
-    cur.close()
-    return render_template('index2.html', artists=data )
+    # cur = mysql.connection.cursor()
+    # cur.execute("SELECT  artist.aID,artist.name,artist.birthDate,artist.commission,artist.city,artist.street FROM artist")
+    # data = cur.fetchall()
+    # cur.close()
+    return render_template('index2.html' )
+    # return render_template('header.html')
+@app.route('/get', methods=['POST'])
+def get():
+    if request.method == 'POST':
+        name = request.form['name']
+        city = request.form['city']
+        commission = request.form['commission']
+        cur = mysql.connection.cursor()
+        if name:
+            cur.execute(f"SELECT  * FROM artist WHERE artist.name='{name}'")
+        elif city:
+            cur.execute(f"SELECT  * FROM artist WHERE artist.city='{city}'")
+        elif commission:
+            cur.execute(f"SELECT  * FROM artist WHERE artist.commission={commission}")
+        else:
+            cur.execute(f"SELECT  * FROM artist")
+        data = cur.fetchall()
+        cur.close()
+    print(data)
+    return render_template('index2.html',artists=data)
 
 @app.route('/insert', methods = ['POST'])
 def insert():
@@ -29,10 +49,11 @@ def insert():
         city = request.form['city']
         street = request.form['street']
         stateAb = request.form['stateAb']
+        zipcode = request.form['zipcode']
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM artist")
         aID = len(cur.fetchall())+1
-        cur.execute("INSERT INTO artist (aID,name, birthDate, deathDate, commission, street, city, stateAb, zipcode) VALUES (%s, %s, %s,%s,%s,%s,%s,%s,%s)", (aID, name, birthDate, None, commission, street, city, stateAb, '12345'))
+        cur.execute("INSERT INTO artist (aID,name, birthDate, deathDate, commission, street, city, stateAb, zipcode) VALUES (%s, %s, %s,%s,%s,%s,%s,%s,%s)", (aID, name, birthDate, None, commission, street, city, stateAb, zipcode))
         mysql.connection.commit()
         cur.close()
         return redirect(url_for('Index'))
